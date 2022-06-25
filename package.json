@@ -24,9 +24,6 @@
     "type": "git",
     "url": "git+https://github.com/cbschuld/lambda-tree.git"
   },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
-  },
   "keywords": [
     "log",
     "logging",

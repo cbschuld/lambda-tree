@@ -38,7 +38,6 @@ describe('output', () => {
       phone: '1234567890'
     }
     log.requestId = 'ARequestId'
-    log.info('a message', td)
     expect(JSON.parse(log.cutter('info', 'a message', td))).toMatchObject({
       level: 'info',
       requestId: 'ARequestId',
