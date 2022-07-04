@@ -1,6 +1,6 @@
 {
   "name": "lambda-tree",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Lambda Tree - a source for logs.",
   "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",
