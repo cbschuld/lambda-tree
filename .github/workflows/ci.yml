@@ -8,10 +8,6 @@ jobs:
     strategy:
       matrix:
         node-version: [14.x, 16.x]
-    environment: Testing
-    env:
-      ANTICIPATED_IO_KEY: ${{ secrets.ANTICIPATED_IO_KEY }}
-      SQS_URL: ${{ secrets.SQS_URL }}
     steps:
       - uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }}
