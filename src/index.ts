@@ -7,7 +7,7 @@ export interface LogConstruction {
 }
 export type LogLevel = 'debug' | 'info' | 'warn' | 'error'
 
-class Log<T> {
+class Log<T = Record<string, unknown>> {
   private _requestId: string | undefined = undefined
   private _tags: string[] = []
 
@@ -68,15 +68,13 @@ class Log<T> {
   /**
    * cut the log message
    * @param level - the level of the message
-   * @param message - the message to log
    * @param data - the data to log (object defined by the user)(typescript available via generic)
    * @returns this - for chaining
    */
-  protected cut(level: LogLevel, message: string, data?: T) {
+  protected cut(level: LogLevel, data: T) {
     return JSON.stringify({
       level,
       ...{ requestId: this.requestId },
-      message,
       ...data,
       tags: this._tags.length > 0 ? this._tags : undefined
     })
@@ -101,49 +99,44 @@ class Log<T> {
   /**
    * log a message with data and tags for lambda
    * @param level - the level of the message
-   * @param message - the message to log
    * @param data - the data to log (object defined by the user)(typescript available via generic)
    * @returns this - for chaining
    */
-  public log(level: LogLevel, message: string, data?: T) {
-    this.blade(level)(this.cut(level, message, data))
+  public log(level: LogLevel, data: T) {
+    this.blade(level)(this.cut(level, data))
     return this
   }
   /**
    * log an INFO message with data and tags for lambda
-   * @param message - the message to log
    * @param data - the data to log (object defined by the user)(typescript available via generic)
    * @returns this - for chaining
    */
-  public info(message: string, data?: T) {
-    return this.log('info', message, data)
+  public info(data: T) {
+    return this.log('info', data)
   }
   /**
    * log a DEBUG message with data and tags for lambda
-   * @param message - the message to log
    * @param data - the data to log (object defined by the user)(typescript available via generic)
    * @returns this - for chaining
    */
-  public debug(message: string, data?: T) {
-    return this.log('debug', message, data)
+  public debug(data: T) {
+    return this.log('debug', data)
   }
   /**
    * log a WARN message with data and tags for lambda
-   * @param message - the message to log
    * @param data - the data to log (object defined by the user)(typescript available via generic)
    * @returns this - for chaining
    */
-  public warn(message: string, data?: T) {
-    return this.log('warn', message, data)
+  public warn(data: T) {
+    return this.log('warn', data)
   }
   /**
    * log a ERROR message with data and tags for lambda
-   * @param message - the message to log
    * @param data - the data to log (object defined by the user)(typescript available via generic)
    * @returns this - for chaining
    */
-  public error(message: string, data?: T) {
-    return this.log('error', message, data)
+  public error(data: T) {
+    return this.log('error', data)
   }
 }
 
