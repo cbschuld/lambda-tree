@@ -52,7 +52,12 @@ log.info({ message: 'customer enabled', user, company, operation })
 Example output might be as follows:
 
 ```json
-{ "level": "info", "requestId": "123", "message": "user enabled", "name": "John", "age": 30, "phone": "1234567890" }
+{
+  "level": "info",
+  "requestId": "123",
+  "message": "user enabled",
+  "user": { "name": "John", "age": 30, "phone": "1234567890" }
+}
 ```
 
 Which was produced via:
@@ -66,7 +71,7 @@ interface UserInfo {
 
 const log = new Log<UserInfo>({ context })
 const user: UserInfo = { name: 'John', age: 30, phone: '1234567890' }
-log.info({ message: 'user enabled', user })
+log.info({ message: 'user enabled', ...user })
 ```
 
 ## Tagging
@@ -76,7 +81,7 @@ There is also a built-in system for tagging log entries. Methods `addTag` and `r
 ```js
 const log = new Log({ context }).addTag('user')
 const user = { username: 'bob' }
-log.info({ message: 'user added', user })
+log.info({ message: 'user added', ...user })
 ```
 
 would produce the following:
