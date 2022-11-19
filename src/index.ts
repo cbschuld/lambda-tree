@@ -9,7 +9,7 @@ export type LogLevel = 'debug' | 'info' | 'warn' | 'error'
 
 class Log<T = Record<string, unknown>> {
   private _requestId: string | undefined = undefined
-  private _tags: string[] = []
+  private _tags: Set<string> = new Set()
 
   /**
    *
@@ -36,7 +36,7 @@ class Log<T = Record<string, unknown>> {
    * retrieve the list of tags in the current log messages
    */
   public get tags(): string[] {
-    return this._tags
+    return [...this._tags]
   }
   /**
    * set the request id
@@ -53,7 +53,7 @@ class Log<T = Record<string, unknown>> {
    * @returns this - for chaining
    */
   public addTag(tag: string) {
-    this._tags.push(tag)
+    this._tags.add(tag)
     return this
   }
   /**
@@ -62,7 +62,7 @@ class Log<T = Record<string, unknown>> {
    * @returns this - for chaining
    */
   public removeTag(tag: string) {
-    this._tags = this._tags.filter((t) => t !== tag)
+    this._tags.delete(tag)
     return this
   }
   /**
@@ -76,7 +76,7 @@ class Log<T = Record<string, unknown>> {
       level,
       ...{ requestId: this.requestId },
       ...data,
-      tags: this._tags.length > 0 ? this._tags : undefined
+      tags: this._tags.size > 0 ? [...this._tags] : undefined
     })
   }
   /**
